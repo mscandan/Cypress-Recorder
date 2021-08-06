@@ -13,23 +13,23 @@ import { EventType } from '../constants';
  */
 
 function handleClick(event: ParsedEvent): string {
-  return `cy.get('${event.selector}').click();`;
+  return `vm.get('${event.selector}').click();`;
 }
 
 function handleKeydown(event: ParsedEvent): string | null {
   switch (event.key) {
     case 'Backspace':
-      return `cy.get('${event.selector}').type('{backspace}');`;
+      return `vm.get('${event.selector}').type('{backspace}');`;
     case 'Escape':
-      return `cy.get('${event.selector}').type('{esc}');`;
+      return `vm.get('${event.selector}').type('{esc}');`;
     case 'ArrowUp':
-      return `cy.get('${event.selector}').type('{uparrow}');`;
+      return `vm.get('${event.selector}').type('{uparrow}');`;
     case 'ArrowRight':
-      return `cy.get('${event.selector}').type('{rightarrow}');`;
+      return `vm.get('${event.selector}').type('{rightarrow}');`;
     case 'ArrowDown':
-      return `cy.get('${event.selector}').type('{downarrow}');`;
+      return `vm.get('${event.selector}').type('{downarrow}');`;
     case 'ArrowLeft':
-      return `cy.get('${event.selector}').type('{leftarrow}');`;
+      return `vm.get('${event.selector}').type('{leftarrow}');`;
     default:
       return null;
   }
@@ -37,20 +37,20 @@ function handleKeydown(event: ParsedEvent): string | null {
 
 function handleChange(event: ParsedEvent): string {
   if (event.inputType === 'checkbox' || event.inputType === 'radio') return null;
-  return `cy.get('${event.selector}').type('${event.value.replace(/'/g, "\\'")}');`;
+  return `vm.get('${event.selector}').type('${event.value.replace(/'/g, "\\'")}');`;
 }
 
 function handleDoubleclick(event: ParsedEvent): string {
-  return `cy.get('${event.selector}').dblclick();`;
+  return `vm.get('${event.selector}').dblclick();`;
 }
 
 function handleSubmit(event: ParsedEvent): string {
-  return `cy.get('${event.selector}').submit();`;
+  return `vm.get('${event.selector}').submit();`;
 }
 
 function handleUrl(url: string): string {
   const { origin, pathname } = new URL(url);
-  return `cy.url().should('contains', '${origin + pathname}');`;
+  return `vm.url().should('contains', '${origin + pathname}');`;
 }
 
 export default {
@@ -70,6 +70,6 @@ export default {
         throw new Error(`Unhandled event: ${event.action}`);
     }
   },
-  createVisit: (url: string): string => `cy.visit('${url}');`,
+  createVisit: (url: string): string => `vm.visit('${url}');`,
   createUrl: (url: string): string => handleUrl(url),
 };
