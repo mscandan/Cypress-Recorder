@@ -131,7 +131,6 @@ body {
   flex-direction: column;
   align-items: flex-start;
   flex-grow: 1;
-  padding: 20;
   overflow-wrap: break-word;
 }
 
@@ -142,6 +141,7 @@ li {
   border: 1px solid gainsboro;
   border-radius: 2px;
   padding: 5px;
+  margin-bottom: 10px;
 
   & button {
     visibility: hidden;
@@ -176,6 +176,7 @@ li.drag-origin {
 
 li.code-block {
   background-color: $active-bg;
+  overflow-wrap: anywhere;
 }
 
 .delete {
