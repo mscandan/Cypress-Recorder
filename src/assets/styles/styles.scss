@@ -8,6 +8,8 @@ $pale-green: rgb(248, 251, 249);
 $header-bg: #304250;
 $action-color: #49afd9;
 $button-color: #000000;
+$white-text-color: #e9ecef;
+$active-bg: #324f61;
 
 body {
   height: $max-height * 0.9;
@@ -173,7 +175,7 @@ li.drag-origin {
 }
 
 li.code-block {
-  background-color: $pale-green;
+  background-color: $active-bg;
 }
 
 .delete {
@@ -195,8 +197,8 @@ li.code-block {
 }
 
 mark {
-  color: $cypress-green;
-  background-color: $pale-green;
+  color: $white-text-color;
+  background-color: transparent;
 }
 
 /**
