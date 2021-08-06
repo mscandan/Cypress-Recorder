@@ -6,6 +6,8 @@ $max-width: 800px;
 $cypress-green: rgb(49, 158, 107);
 $pale-green: rgb(248, 251, 249);
 $header-bg: #304250;
+$action-color: #49afd9;
+$button-color: #000000;
 
 body {
   height: $max-height * 0.9;
@@ -202,33 +204,45 @@ mark {
  */
 
 .button {
-  background-color: $cypress-green;
-  border: 1px solid $pale-green;
+  background-color: $action-color;
   margin: 10px;
   padding: 15px;
-  border-radius: 4px;
+  border-radius: 2px;
+  border: none;
   font-size: 16px;
   font-weight: 400;
-  color: $pale-green;
+  color: $button-color;
   line-height: 8px;
+  cursor: pointer;
+  outline: none;
+
+  &:focus {
+    outline: none;
+  }
 
   &:hover {
-    background-color: $pale-green;
-    color: $cypress-green;
+    background-color: rgba($action-color, 0.7);
+    color: $button-color;
     transition: all 0.15s ease 0s;
   }
 }
 
 .disabled-button {
-  background-color: rgb(106, 174, 143);
-  border: 1px solid $pale-green;
+  background-color: $action-color;
   margin: 10px;
   padding: 15px;
-  border-radius: 4px;
+  border-radius: 2px;
   font-size: 16px;
   font-weight: 400;
-  color: $pale-green;
+  color: $button-color;
   line-height: 8px;
+  opacity: 0.5;
+  outline: none;
+  border: none;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .text {
