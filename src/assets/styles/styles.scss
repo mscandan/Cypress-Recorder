@@ -10,14 +10,16 @@ $action-color: #49afd9;
 $button-color: #000000;
 $white-text-color: #e9ecef;
 $active-bg: #324f61;
+$success-color: #60b515;
 
 body {
-  height: $max-height * 0.9;
-  width: $max-width * 0.9;
+  height: $max-height * 0.8;
+  width: $max-width * 0.6;
   font: 100% $font-stack;
   color: $primary-color;
   background-color: $primary-background-color;
   overscroll-behavior-y: none;
+  font-size: 13px;
 }
 
 * {
@@ -34,13 +36,13 @@ body {
   display: flex;
   flex-direction: column;
   align-content: space-between;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
 }
 
 #header {
-  position: fixed;
   width: 100%;
-  top: 0px;
+  height: 48px;
   background-color: $header-bg;
   display: flex;
   justify-content: space-between;
@@ -53,19 +55,22 @@ body {
   align-items: center;
   justify-content: center;
   flex-grow: 1;
-  padding: 20px;
+  margin-top: 20px;
+  padding: 0 10px;
   color: $primary-color;
+  height: calc(100% - 96px);
+  overflow-y: scroll;
 }
 
 #title {
-  color: $pale-green;
-  font-size: 22px;
+  color: $white-text-color;
+  font-size: 16px;
   margin-left: 10px;
   font-weight: 200;
 }
 
 #infobox {
-  background-color: $pale-green;
+  background-color: $white-text-color;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -74,13 +79,13 @@ body {
 }
 
 #footer {
-  position: fixed;
   width: 100%;
-  bottom: 0px;
+  height: 48px;
   background-color: $header-bg;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 20px;
 
   & #toggle-wrap {
     display: flex;
@@ -125,13 +130,11 @@ body {
 }
 
 #code-display {
-  margin: 60px 0px;
   display: flex;
   flex-wrap: wrap;
-  flex-direction: column;
   align-items: flex-start;
   flex-grow: 1;
-  overflow-wrap: break-word;
+  height: 100%;
 }
 
 li {
@@ -180,19 +183,25 @@ li.code-block {
 }
 
 .delete {
-  background-color: rgba(49, 158, 107, 0.7);
+  background-color: $success-color;
   align-self: center;
   padding: 2px;
   margin: 2px;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 400;
-  color: $pale-green;
+  color: $white-text-color;
   line-height: 8px;
+  cursor: pointer;
+  outline: none;
+
+  &:focus {
+    outline: none;
+  }
 
   &:hover {
-    background-color: $cypress-green;
-    color: $pale-green;
+    background-color: rgba($success-color, 0.7);
+    color: $white-text-color;
     transition: all 0.15s ease 0s;
   }
 }
@@ -212,7 +221,7 @@ mark {
   padding: 15px;
   border-radius: 2px;
   border: none;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 400;
   color: $button-color;
   line-height: 8px;
@@ -235,7 +244,7 @@ mark {
   margin: 10px;
   padding: 15px;
   border-radius: 2px;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 400;
   color: $button-color;
   line-height: 8px;
@@ -250,13 +259,13 @@ mark {
 
 .text {
   color: $primary-color;
-  font-size: 14px;
+  font-size: 13px;
   margin-left: 10px;
   padding-top: 15px;
 }
 
 .white-text {
-  color: $pale-green;
-  font-size: 14px;
+  color: $white-text-color;
+  font-size: 13px;
   margin-left: 10px;
 }
