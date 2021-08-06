@@ -25,14 +25,11 @@ const session: Session = {
  * @param cb
  * @param args
  */
-function control(
-  cb: (...args: any) => Promise<void>,
-  cmd?: string | ActionWithPayload
-): void {
+function control(cb: (...args: any) => Promise<void>, cmd?: string | ActionWithPayload): void {
   if (session.isPending) return;
   session.isPending = true;
   cb(cmd)
-    .catch((err) => new Error(err))
+    .catch(err => new Error(err))
     .finally(() => {
       session.isPending = false;
     });
@@ -44,18 +41,13 @@ function control(
  * @param details If the details argument is present, that means that web navigation occured, and
  * we want to ensure that this navagation is occuring in the top-level frame.
  */
-function injectEventRecorder(
-  details?: chrome.webNavigation.WebNavigationFramedCallbackDetails
-): Promise<void> {
+function injectEventRecorder(details?: chrome.webNavigation.WebNavigationFramedCallbackDetails): Promise<void> {
   return new Promise((resolve, reject) => {
     if (!details || details.frameId === 0) {
-      chrome.tabs.executeScript(
-        { file: '/content-scripts/eventRecorder.js' },
-        () => {
-          if (chrome.runtime.lastError) reject(chrome.runtime.lastError);
-          else resolve();
-        }
-      );
+      chrome.tabs.executeScript({ file: '/content-scripts/eventRecorder.js' }, () => {
+        if (chrome.runtime.lastError) reject(chrome.runtime.lastError);
+        else resolve();
+      });
     } else resolve();
   });
 }
@@ -64,11 +56,8 @@ function injectEventRecorder(
  * Disconnects the event recorder.
  * @param details
  */
-function ejectEventRecorder(
-  details?: chrome.webNavigation.WebNavigationParentedCallbackDetails
-): void {
-  if (session.activePort && (!details || details.frameId === 0))
-    session.activePort.disconnect();
+function ejectEventRecorder(details?: chrome.webNavigation.WebNavigationParentedCallbackDetails): void {
+  if (session.activePort && (!details || details.frameId === 0)) session.activePort.disconnect();
 }
 
 /**
@@ -84,9 +73,9 @@ function handleEvents(event: ParsedEvent): void {
         .then(() => {
           model.pushBlock(block);
         })
-        .catch((err) => new Error(err));
+        .catch(err => new Error(err));
     } else {
-      model.pushBlock(block).catch((err) => new Error(err));
+      model.pushBlock(block).catch(err => new Error(err));
     }
   }
 }
@@ -96,9 +85,7 @@ function handleEvents(event: ParsedEvent): void {
  */
 let stopRecording: () => Promise<void>;
 
-function checkForBadNavigation(
-  details: chrome.webNavigation.WebNavigationTransitionCallbackDetails
-): void {
+function checkForBadNavigation(details: chrome.webNavigation.WebNavigationTransitionCallbackDetails): void {
   if (
     details.frameId === 0 &&
     (!details.url.includes(session.originalHost) ||
@@ -110,10 +97,8 @@ function checkForBadNavigation(
     const urlBlock = codeGenerator.createUrl(details.url);
     model
       .pushBlock(urlBlock)
-      .then((block) =>
-        chrome.runtime.sendMessage({ type: ControlAction.PUSH, payload: block })
-      )
-      .catch((err) => new Error(err));
+      .then(block => chrome.runtime.sendMessage({ type: ControlAction.PUSH, payload: block }))
+      .catch(err => new Error(err));
   }
 }
 
@@ -129,10 +114,8 @@ function handleFirstConnection(): void {
     session.lastURL = session.activePort.sender.url;
     model
       .pushBlock(visitBlock)
-      .then((block) =>
-        chrome.runtime.sendMessage({ type: ControlAction.PUSH, payload: block })
-      )
-      .catch((err) => new Error(err));
+      .then(block => chrome.runtime.sendMessage({ type: ControlAction.PUSH, payload: block }))
+      .catch(err => new Error(err));
   }
 }
 
@@ -161,7 +144,7 @@ function startRecording(): Promise<void> {
         chrome.browserAction.setIcon({ path: 'vm_32.png' });
         resolve();
       })
-      .catch((err) => reject(err));
+      .catch(err => reject(err));
   });
 }
 
@@ -179,7 +162,7 @@ stopRecording = () =>
         chrome.browserAction.setIcon({ path: 'vm_32.png' });
         resolve();
       })
-      .catch((err) => reject(err));
+      .catch(err => reject(err));
   });
 
 /**
@@ -191,7 +174,7 @@ function resetRecording(): Promise<void> {
     model
       .reset()
       .then(() => resolve())
-      .catch((err) => {
+      .catch(err => {
         reject(err);
       });
   });
@@ -207,7 +190,7 @@ function cleanUp(): Promise<void> {
     model
       .sync()
       .then(() => resolve())
-      .catch((err) => reject(err));
+      .catch(err => reject(err));
   });
 }
 
@@ -221,17 +204,17 @@ function handleControlAction(action: ControlAction): Promise<void> {
       case ControlAction.START:
         startRecording()
           .then(() => resolve())
-          .catch((err) => reject(err));
+          .catch(err => reject(err));
         break;
       case ControlAction.STOP:
         stopRecording()
           .then(() => resolve())
-          .catch((err) => reject(err));
+          .catch(err => reject(err));
         break;
       case ControlAction.RESET:
         resetRecording()
           .then(() => resolve())
-          .catch((err) => reject(err));
+          .catch(err => reject(err));
         break;
       default:
         reject(new Error(`Invalid action: ${action}`));
@@ -250,16 +233,16 @@ function handleMessage({ type, payload }: ActionWithPayload): Promise<void> {
       model
         .deleteBlock(payload)
         .then(() => resolve())
-        .catch((err) => reject(err));
+        .catch(err => reject(err));
     } else if (type === ControlAction.MOVE) {
       model
         .moveBlock(payload.dragIdx, payload.dropIdx)
         .then(() => resolve())
-        .catch((err) => reject(err));
+        .catch(err => reject(err));
     } else {
       handleControlAction(type)
         .then(() => resolve())
-        .catch((err) => reject(err));
+        .catch(err => reject(err));
     }
   });
 }
@@ -272,21 +255,16 @@ function handleQuickKeys(command: string): Promise<void> {
   return new Promise((resolve, reject) => {
     let action: ControlAction;
     if (command === 'start-recording') {
-      if (model.status === RecState.OFF || model.status === RecState.PAUSED)
-        action = ControlAction.START;
+      if (model.status === RecState.OFF || model.status === RecState.PAUSED) action = ControlAction.START;
       else if (model.status === RecState.ON) action = ControlAction.STOP;
-    } else if (
-      command === 'reset-recording' &&
-      model.status === RecState.PAUSED
-    )
-      action = ControlAction.RESET;
+    } else if (command === 'reset-recording' && model.status === RecState.PAUSED) action = ControlAction.RESET;
     if (action) {
       handleControlAction(action)
         .then(() => {
           chrome.runtime.sendMessage({ type: action });
           resolve();
         })
-        .catch((err) => reject(new Error(err)));
+        .catch(err => reject(new Error(err)));
     }
   });
 }
@@ -296,12 +274,8 @@ function handleQuickKeys(command: string): Promise<void> {
  */
 function initialize(): void {
   chrome.runtime.onConnect.addListener(handleNewConnection);
-  chrome.runtime.onMessage.addListener((message) =>
-    control(handleMessage, message)
-  );
-  chrome.commands.onCommand.addListener((command) =>
-    control(handleQuickKeys, command)
-  );
+  chrome.runtime.onMessage.addListener(message => control(handleMessage, message));
+  chrome.commands.onCommand.addListener(command => control(handleQuickKeys, command));
   control(cleanUp);
 }
 

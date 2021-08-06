@@ -75,6 +75,7 @@
     "jest": "^24.9.0",
     "jest-enzyme": "^7.1.1",
     "parcel-bundler": "^1.12.4",
+    "prettier": "^2.3.2",
     "sass": "^1.23.0",
     "ts-jest": "^26.1.1",
     "typescript": "^3.6.4"
