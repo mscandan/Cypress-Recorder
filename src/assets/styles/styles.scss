@@ -13,6 +13,11 @@ $active-bg: #324f61;
 $success-color: #60b515;
 $drag-color: #495865;
 
+@font-face {
+  font-family: 'Metropolis';
+  src: url(../Metropolis/Metropolis-Regular.woff);
+}
+
 body {
   height: $max-height * 0.8;
   width: $max-width * 0.6;
@@ -27,7 +32,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
+  font-family: Metropolis, 'Roboto', sans-serif;
 
   &:focus {
     outline: 0;

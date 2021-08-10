@@ -141,7 +141,7 @@ function startRecording(): Promise<void> {
     injectEventRecorder()
       .then(() => model.updateStatus(RecState.ON))
       .then(() => {
-        chrome.browserAction.setIcon({ path: 'vm_32.png' });
+        chrome.browserAction.setIcon({ path: 'images/vm_32.png' });
         resolve();
       })
       .catch(err => reject(err));
@@ -159,7 +159,7 @@ stopRecording = () =>
       .then(() => {
         session.activePort = null;
         session.originalHost = null;
-        chrome.browserAction.setIcon({ path: 'vm_32.png' });
+        chrome.browserAction.setIcon({ path: 'images/vm_32.png' });
         resolve();
       })
       .catch(err => reject(err));
@@ -186,7 +186,7 @@ function resetRecording(): Promise<void> {
 function cleanUp(): Promise<void> {
   return new Promise((resolve, reject) => {
     ejectEventRecorder();
-    chrome.browserAction.setIcon({ path: 'vm_32.png' });
+    chrome.browserAction.setIcon({ path: 'images/vm_32.png' });
     model
       .sync()
       .then(() => resolve())
