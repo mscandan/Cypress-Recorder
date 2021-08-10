@@ -11,6 +11,7 @@ $button-color: #000000;
 $white-text-color: #e9ecef;
 $active-bg: #324f61;
 $success-color: #60b515;
+$drag-color: #495865;
 
 body {
   height: $max-height * 0.8;
@@ -25,6 +26,7 @@ body {
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
 
   &:focus {
@@ -70,7 +72,7 @@ body {
 }
 
 #infobox {
-  background-color: $white-text-color;
+  background-color: $primary-background-color;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -131,8 +133,8 @@ body {
 
 #code-display {
   display: flex;
-  flex-wrap: wrap;
   align-items: flex-start;
+  flex-direction: column;
   flex-grow: 1;
   height: 100%;
 }
@@ -170,30 +172,35 @@ li {
 }
 
 li.drag-origin {
-  background-color: gainsboro;
+  background-color: $drag-color;
+
+  & button {
+    display: none;
+  }
 
   & mark {
-    background-color: gainsboro;
+    background-color: $drag-color;
   }
 }
 
 li.code-block {
   background-color: $active-bg;
   overflow-wrap: anywhere;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .delete {
   background-color: $success-color;
-  align-self: center;
-  padding: 2px;
+  padding: 4px;
   margin: 2px;
-  border-radius: 4px;
   font-size: 13px;
-  font-weight: 400;
   color: $white-text-color;
   line-height: 8px;
   cursor: pointer;
   outline: none;
+  border: none;
 
   &:focus {
     outline: none;
@@ -268,4 +275,8 @@ mark {
   color: $white-text-color;
   font-size: 13px;
   margin-left: 10px;
+}
+
+.detected {
+  flex-grow: 1;
 }

@@ -35,7 +35,7 @@ export default ({
       onDragOver={e => onDragOver(e, index)}
       onDrop={e => onDrop(e, index)}
     >
-      <span>
+      <span className="detected">
         {preSelector}
         <mark className="selector">{selector}</mark>
         {postSelector}
