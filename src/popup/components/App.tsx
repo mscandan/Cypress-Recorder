@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Header from './Header';
-import Info from './Info';
 import Footer from './Footer';
 import Body from './Body';
 import type { Block, ActionWithPayload } from '../../types';
@@ -10,7 +9,6 @@ import '../../assets/styles/styles.scss';
 export default () => {
   const [recStatus, setRecStatus] = React.useState<RecState>(RecState.OFF);
   const [codeBlocks, setCodeBlocks] = React.useState<Block[]>([]);
-  const [shouldInfoDisplay, setShouldInfoDisplay] = React.useState<boolean>(false);
   const [isValidTab, setIsValidTab] = React.useState<boolean>(true);
 
   const startRecording = (): void => {
@@ -35,9 +33,8 @@ export default () => {
     });
   }, []);
 
-  React.useEffect((): () => void => {
+  React.useEffect((): (() => void) => {
     function handleMessageFromBackground({ type, payload }: ActionWithPayload): void {
-      setShouldInfoDisplay(false);
       if (type === ControlAction.START && isValidTab) startRecording();
       else if (type === ControlAction.STOP) stopRecording();
       else if (type === ControlAction.RESET) resetRecording();
@@ -50,15 +47,10 @@ export default () => {
   }, []);
 
   const handleToggle = (action: ControlAction): void => {
-    if (shouldInfoDisplay) setShouldInfoDisplay(false);
     if (action === ControlAction.START) startRecording();
     else if (action === ControlAction.STOP) stopRecording();
     else if (action === ControlAction.RESET) resetRecording();
     chrome.runtime.sendMessage({ type: action });
-  };
-
-  const toggleInfoDisplay = (): void => {
-    setShouldInfoDisplay(should => !should);
   };
 
   const copyToClipboard = async (): Promise<void> => {
@@ -94,21 +86,16 @@ export default () => {
 
   return (
     <div id="App">
-      <Header shouldInfoDisplay={shouldInfoDisplay} toggleInfoDisplay={toggleInfoDisplay} />
-      {
-        (shouldInfoDisplay
-          ? <Info />
-          : (
-            <Body
-              codeBlocks={codeBlocks}
-              recStatus={recStatus}
-              isValidTab={isValidTab}
-              destroyBlock={destroyBlock}
-              moveBlock={moveBlock}
-            />
-          )
-        )
-      }
+      <Header />
+
+      <Body
+        codeBlocks={codeBlocks}
+        recStatus={recStatus}
+        isValidTab={isValidTab}
+        destroyBlock={destroyBlock}
+        moveBlock={moveBlock}
+      />
+
       <Footer
         isValidTab={isValidTab}
         recStatus={recStatus}

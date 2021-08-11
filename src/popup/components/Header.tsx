@@ -1,14 +1,7 @@
 import * as React from 'react';
-import InfoButton from './InfoButton';
 
-export interface HeaderProps {
-  toggleInfoDisplay: () => void;
-  shouldInfoDisplay: boolean;
-}
-
-export default ({ shouldInfoDisplay, toggleInfoDisplay }: HeaderProps) => (
+export default () => (
   <div id="header">
     <h1 id="title">VirtualMetric Web Recorder</h1>
-    <InfoButton shouldInfoDisplay={shouldInfoDisplay} toggleInfoDisplay={toggleInfoDisplay} />
   </div>
 );

@@ -4,7 +4,6 @@ import App from '../popup/components/App';
 import Header from '../popup/components/Header';
 import Body from '../popup/components/Body';
 import Footer from '../popup/components/Footer';
-import Info from '../popup/components/Info';
 import '../setupTests';
 
 describe('App', () => {
@@ -17,6 +16,5 @@ describe('App', () => {
     expect(wrapper.exists(Header)).toBe(true);
     expect(wrapper.exists(Body)).toBe(true);
     expect(wrapper.exists(Footer)).toBe(true);
-    expect(wrapper.exists(Info)).toBe(false);
   });
 });
