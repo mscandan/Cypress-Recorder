@@ -12,6 +12,7 @@ $white-text-color: #e9ecef;
 $active-bg: #324f61;
 $success-color: #60b515;
 $drag-color: #495865;
+$border-color: #0f171c;
 
 @font-face {
   font-family: 'Metropolis';
@@ -138,7 +139,7 @@ body {
 
 #code-display {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: column;
   flex-grow: 1;
   height: 100%;
@@ -148,7 +149,7 @@ li {
   display: flex;
   justify-content: space-between;
   width: 98.5%;
-  border: 1px solid gainsboro;
+  border: 1px solid $border-color;
   border-radius: 2px;
   padding: 5px;
   margin-bottom: 10px;
